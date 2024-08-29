@@ -1,0 +1,107 @@
+/* Styling für die Kopfzeile */
+header {
+  background: #d50032;;
+    color: white;
+    height: 50px;
+  }
+/* Styling für Überschrift h1 */
+h1 {
+    background-color: white;
+  }
+
+  /* Styling für das Drag-and-Drop Feld */
+.drop-zone {
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ccc;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin-top: 10px;
+}
+.drop-zone.dragover {
+  border-color: #000;
+  color: #000;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+#calendar {
+  width: 300px;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+#calendar .jsCalendar-header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+#calendar .jsCalendar-header h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#calendar .jsCalendar-body {
+  padding: 20px;
+}
+
+#calendar .jsCalendar-body table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#calendar .jsCalendar-body table th, #calendar .jsCalendar-body table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+#calendar .jsCalendar-body table th {
+  background-color: #f0f0f0;
+}
+
+#calendar .jsCalendar-body table td {
+  background-color: #fff;
+}
+
+#calendar .jsCalendar-body table td.jsCalendar-selected {
+  background-color: #333;
+  color: #fff;
+}
+
+#calendar .jsCalendar-body table td.jsCalendar-today {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+#calendar .jsCalendar-footer {
+  padding: 10px;
+  text-align: center;
+}
+
+#calendar .jsCalendar-footer button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#calendar .jsCalendar-footer button:hover {
+  background-color: #444;
+}
