@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bonuszahlungen</title>
-  <meta name="description" content="Beschreibungstext">
-  <link rel="stylesheet" href="sytle.css">
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Page</title>
+    <!-- Verknüpfung zur CSS-Datei -->
+    <link rel="stylesheet" href="sytle.css">
 </head>
 
 <body>
@@ -64,22 +64,6 @@
   </select>
 
   <title>Kalender</title>
-   table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .prev, .next {
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <h1 id="monthYear"></h1>
@@ -95,9 +79,53 @@
                 <th>So</th>
             </tr>
         </thead>
-        <tbody id="calendarBody">
-            <!-- Kalenderinhalt wird durch JavaScript generiert -->
-        </tbody>
+        <tbody>
+          <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+          </tr>
+          <tr>
+              <td>5</td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+              <td>9</td>
+              <td>10</td>
+              <td>11</td>
+          </tr>
+          <tr>
+              <td>12</td>
+              <td>13</td>
+              <td>14</td>
+              <td>15</td>
+              <td>16</td>
+              <td>17</td>
+              <td>18</td>
+          </tr>
+          <tr>
+              <td>19</td>
+              <td>20</td>
+              <td>21</td>
+              <td>22</td>
+              <td>23</td>
+              <td>24</td>
+              <td>25</td>
+          </tr>
+          <tr>
+              <td>26</td>
+              <td>27</td>
+              <td>28</td>
+              <td>29</td>
+              <td>30</td>
+              <td>31</td>
+              <td></td>
+          </tr>
+      </tbody>
     </table>
     <button class="prev" onclick="prevMonth()">Vorheriger Monat</button>
     <button class="next" onclick="nextMonth()">Nächster Monat</button>
@@ -122,6 +150,6 @@
 <footer>
 	Fußzeile
 </footer>
-    
+<script src="script.js"></script>
 </body>
 </html>
