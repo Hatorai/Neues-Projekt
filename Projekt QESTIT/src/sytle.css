@@ -4,92 +4,41 @@ body {
 }
 
 /* Stil für den Kopfbereich */
-.header {
+header {
   background-color: #c8001d;
   color: white;
   padding: 10px;
 }
 
 /* Stil für den Inhaltsbereich */
-.content {
+content {
   padding: 20px;
 }
 
 /* Stile für Überschriften */
 h1, h2 {
   font-weight: bold;
-}
-
-/* Stil für Links */
-.link {
-  color: #0000ee;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-/* Stil für Formulargruppen */
-.form-group {
-  margin-bottom: 15px;
-}
-
-/* Stil für Formulargruppen-Labels */
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-/* Stil für Formulargruppen-Selects und Inputs */
-.form-group select, .form-group input {
-  padding: 5px;
-  font-size: 14px;
-}
-
-/* Stil für den Kalenderbereich */
-.calendar {
-  margin-top: 20px;
-}
-
-/* Stil für den Kalender-Tabelle */
-.calendar table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 10px;
-}
-
-/* Stil für Kalender-Tabellenzellen */
-.calendar th, .calendar td {
-  border: 1px solid #ddd;
-  padding: 5px;
-  text-align: center;
-}
-
-/* Stil für Kalender-Tabellenkopf */
-.calendar th {
-  background-color: #f2f2f2;
+  background-color: #c8001d;
 }
 
 /* Stil für den Upload-Bereich */
-.upload-area {
+#drope_zone {
   border: 2px dashed #ccc;
-  padding: 20px;
+  padding: 20px 10px;
   text-align: center;
-  color: #ccc;
+  color: #e04242;
   margin-top: 10px;
 }
 
-/* Stil für Schaltflächen */
-.buttons {
-  margin-top: 10px;
-}
 
 /* Stil für Schaltflächen */
-.buttons button {
+button {
   padding: 5px 10px;
   margin-right: 5px;
 }
 
 /* Stil für den Fußbereich */
-.footer {
+footer {
   margin-top: 20px;
 }
 
@@ -97,4 +46,28 @@ h1, h2 {
 .current-date {
   font-weight: bold;
   color: red;
+}
+
+.holiday {
+  background-color: #ff69b4; /* or any other color you prefer */
+  color: #fff;
+}
+
+.calendar {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.calendar th, .calendar td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.workday {
+  background-color: #f0f0f0;
+}
+
+.weekend {
+  background-color: #5c5a5a; /* or any other color you prefer */
 }
