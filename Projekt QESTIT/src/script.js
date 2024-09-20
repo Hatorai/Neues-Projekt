@@ -1,4 +1,5 @@
 const calendarBody = document.getElementById('calendar-body');
+const monthYearElement = document.getElementById('monthYear');
 const today = new Date();
 let month = today.getMonth();
 let year = today.getFullYear();
@@ -10,6 +11,26 @@ function generateCalendar(currentDay) {
   const lastDayOfMonth = new Date(year, month + 1, 0);
   const daysInMonth = lastDayOfMonth.getDate();
 
+  monthYearElement.textContent = `${getMonthName(month)} ${year}`;
+  console.log('monthYearElement textContent:', monthYearElement.textContent); // Check if the textContent is updated
+  
+  function getMonthName(month) {
+    const monthName = [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember'
+    ];
+    return monthName[month];
+  }
 
 
   let row = '';
@@ -77,3 +98,4 @@ nextButton.addEventListener('click', () => {
 
 // Initialer Aufruf zur Generierung des Kalenders
 generateCalendar(1);
+

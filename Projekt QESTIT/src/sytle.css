@@ -22,7 +22,7 @@ h1, h2 {
 }
 
 /* Stil für den Upload-Bereich */
-#drope_zone {
+#drop_zone {
   border: 2px dashed #ccc;
   padding: 20px 10px;
   text-align: center;
