@@ -12,7 +12,6 @@ function generateCalendar(currentDay) {
   const daysInMonth = lastDayOfMonth.getDate();
 
   monthYearElement.textContent = `${getMonthName(month)} ${year}`;
-  console.log('monthYearElement textContent:', monthYearElement.textContent); // Check if the textContent is updated
   
   function getMonthName(month) {
     const monthName = [
@@ -31,7 +30,6 @@ function generateCalendar(currentDay) {
     ];
     return monthName[month];
   }
-
 
   let row = '';
   let dayCounter = 1;
@@ -99,3 +97,59 @@ nextButton.addEventListener('click', () => {
 // Initialer Aufruf zur Generierung des Kalenders
 generateCalendar(1);
 
+function handleDragOver(event) {
+  event.preventDefault();
+}
+function handleDrop(event) {
+  event.preventDefault();
+  console.log('handleDrop called');
+
+  const xlsxFileInput = document.getElementById('xlsx-file');
+  const xlsxDataSelect = document.getElementById('xlsx-data');
+
+  xlsxFileInput.addEventListener('change', (event) => {
+    console.log('File changed');
+
+    const file = event.target.files[0];
+    console.log('File:', file);
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      console.log('File read');
+
+      const xlsxData = event.target.result;
+      console.log('XLSX data:', xlsxData);
+
+      const workbook = XLSX.read(xlsxData, { type: 'array' });
+      console.log('Workbook:', workbook);
+
+      const sheetName = workbook.SheetNames[0];
+      console.log('Sheet name:', sheetName);
+
+      const worksheet = workbook.Sheets[sheetName];
+      console.log('Worksheet:', worksheet);
+
+      const data = XLSX.utils.sheet_to_json(worksheet);
+      console.log('Data:', data);
+
+      if (!data || data.length === 0) {
+        console.log('No data in the XLSX file');
+      } else {
+        console.log('Data length:', data.length);
+
+        // Store the data in an array
+        const dataArray = [];
+        data.forEach((row) => {
+          console.log('Row:', row);
+          dataArray.push(Object.values(row));
+        });
+
+        // Output the dataArray to the console
+        console.log('dataArray:', dataArray);
+      }
+    };
+
+    reader.readAsArrayBuffer(file);
+  });
+}
