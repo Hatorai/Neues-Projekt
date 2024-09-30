@@ -5,6 +5,34 @@ let month = today.getMonth();
 let year = today.getFullYear();
 const day = today.getDate();
 
+/*
+//block für berechnungen
+let target = 0;//target hours
+let holiday = 0;//Holiday Hours
+let billable = 0;//Billable hours
+let nonBillable = 0;//Non billable hour
+let newTarget = target-holiday;//neue sollarbeitszeit
+let threshold = newTarget*0.91;//schwelle
+let overThreshold = newTarget-threshold;//über schwelle
+let bonusHour = overThreshold*3;  //Bonus Stunden
+let Illnes = 0;//Krankenstand
+let travel = 0;//Reisezeit
+let intern = 0;//internes Projekt
+let total = 0;//total in hours
+let getInput; //wert aus eingabefeld
+let basicSalery = 0;//Grundgehalt (id = ge / 12) 
+let saleryPerHour = salery / 174;//Stundensatz
+let bonus = bonusHour * saleryPerHour; //Bonus 
+let salery = basicSalery + bonus;//Gesamtgehalt
+let hourWithouBonus = total - overThreshold//stunden ohne bonus
+
+
+document.getElementById('ge').addEventListener('input', function() {
+  getInput = document.getElementById('ge').value; //wert aus eingabefeld
+  basicSalery = getInput/12;
+    console.log('Monatliches Gehalt:', basicSalery);
+});
+*/
 // Funktion, um den Kalender zu generieren
 function generateCalendar(currentDay) {
   const firstDayOfMonth = new Date(year, month, 1);
@@ -97,18 +125,36 @@ nextButton.addEventListener('click', () => {
 // Initialer Aufruf zur Generierung des Kalenders
 generateCalendar(1);
 
-function handleDragOver(event) {
-  event.preventDefault();
-}
-function handleDrop(event) {
-  event.preventDefault();
-  console.log('handleDrop called');
+//handledrop
 
+document.addEventListener('DOMContentLoaded', (event) => {
+  const dropZone = document.getElementById('drop_zone');
   const xlsxFileInput = document.getElementById('xlsx-file');
-  const xlsxDataSelect = document.getElementById('xlsx-data');
+
+  dropZone.addEventListener('dragover', handleDragOver);
+  dropZone.addEventListener('drop', handleDrop);
+
+  function handleDragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy'; // Zeigt an, dass ein Kopiervorgang stattfindet
+  }
+
+  function handleDrop(event) {
+    event.preventDefault();
+    console.log('handleDrop called');
+
+    if (event.dataTransfer.files.length > 0) {
+      xlsxFileInput.files = event.dataTransfer.files;
+      console.log('xlsxFileInput:', xlsxFileInput);
+
+      // Trigger the change event manually
+      const changeEvent = new Event('change');
+      xlsxFileInput.dispatchEvent(changeEvent);
+    }
+  }
 
   xlsxFileInput.addEventListener('change', (event) => {
-    console.log('File changed');
+    console.log('Change event triggered!');
 
     const file = event.target.files[0];
     console.log('File:', file);
@@ -138,18 +184,15 @@ function handleDrop(event) {
       } else {
         console.log('Data length:', data.length);
 
-        // Store the data in an array
-        const dataArray = [];
-        data.forEach((row) => {
+        // Simplify the data processing
+        const dataArray = data.map((row) => {
           console.log('Row:', row);
-          dataArray.push(Object.values(row));
+          console.log('Object.values(row):', Object.values(row));
+          return Object.values(row);
         });
-
-        // Output the dataArray to the console
-        console.log('dataArray:', dataArray);
       }
     };
 
     reader.readAsArrayBuffer(file);
   });
-}
+});

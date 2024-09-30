@@ -29,7 +29,7 @@
   </nav>
 
   <!-- Drop down auswahl lvl -->
-  <label for="lvl">Level :</label>
+  <label="lvl">Level :</label>
   <select id="lvl" name="lvl">
     <option value="de">Q1-Q3</option>
     <option value="at">Q4-Q6</option>
@@ -43,7 +43,7 @@
 
   <!-- Drop down auswahl Bundesland -->
   
-  <label for="state-select">Wähle ein Bundesland:</label>
+  <label="state-select">Wähle ein Bundesland:</label>
   <select id="state-select">
     <option value="bw">Baden-Württemberg</option>
     <option value="by">Bayern</option>
@@ -88,12 +88,35 @@
     <button id="next-button">Nächster Monat</button>
 
   <!-- Drag-and-Drop Feld -->
-  <label for="file">Datei hochladen:</label>
-  <div id="drop_zone" class="drop-zone" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
-    Datei hierher ziehen
-  </div>
-  <input type="file" id="xlsx-file" name="file" accept=".xlsx" style="display:none;">
-  <br>
+  <label="file">Datei hochladen:</label>
+<div id="drop_zone" class="drop-zone">
+  Datei hierher ziehen
+</div>
+<input type="file" id="xlsx-file" name="file" accept=".xlsx">
+<br>
+
+<h1>Output</h1>
+
+Sollstunden je Monat (<div id="target"></div>)
+<br>
+Anzahl Stunden Projekt (<div id="billable"></div>)
+<br>
+Anzahl Stunden Krankenstand (<div id="illnes"></div>)
+<br>
+Anzahl Stunden internes Projekt (<div id="intern"></div>)
+<br>
+Anzahl Stunden Reisezeit (<div id="travel"></div>)
+<br>
+Stunden im einfachen Bonus (<div id="hourWithouBonus"></div>)
+<br>
+Stunden dreifacher Bonus (<div id="overThreshold"></div>)
+<br>
+variabler Gehaltsbestandteil dreifacher bonus (<div id="bonus"></div>)
+<br>
+Grundgehalt  (<div id="basicSalery"></div>)
+<br>
+Gesamtgehalt  (<div id="salery"></div>)
+<br>
 
 <!-- aside -->
 <aside>
@@ -104,6 +127,9 @@
 <footer>
 	Fußzeile
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
+
+ 
