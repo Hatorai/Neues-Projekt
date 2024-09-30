@@ -172,62 +172,100 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const workbook = XLSX.read(xlsxData, { type: 'array' });
       console.log('Workbook:', workbook);
 
-      const sheetName = workbook.SheetNames[0];
-      console.log('Sheet name:', sheetName);
+      const sums = {};
+      const months = workbook.SheetNames.map(sheetName => {
+        // Extrahiere den Monatsnamen aus dem Tabellennamen
+        const monthMatch = sheetName.match(/([A-Za-z]+)/);
+        return monthMatch ? monthMatch[0] : sheetName;
+      });
 
-      const worksheet = workbook.Sheets[sheetName];
-      console.log('Worksheet:', worksheet);
+      months.forEach((sheetName, monthIndex) => {
+        const worksheet = workbook.Sheets[workbook.SheetNames[monthIndex]];
+        console.log(`Worksheet (${sheetName}):`, worksheet);
 
-      const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      console.log('Data:', data);
+          const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          console.log('Data:', data);
 
-      if (!data || data.length === 0) {
-        console.log('No data in the XLSX file');
-      } else {
-        console.log('Data length:', data.length);
+          if (!data || data.length === 0) {
+            console.log(`No data in the sheet: ${sheetName}`);
+          } else {
+            console.log('Data length:', data.length);
 
-        // Annahme: Die zweite Zeile enthält die Header
-        const headers = data[1];
-        console.log('Headers:', headers);
+            // Annahme: Die erste Zeile enthält die Header
+            const headers = data[1];
+            console.log('Headers:', headers);
 
-        // Finde den Index der "Billable hours" Spalte
-        const billableHoursIndex = headers.indexOf('Billable hours');
-        console.log('Billable hours index:', billableHoursIndex);
+            // Initialisiere die Summen für jede Spalte ab der zweiten Spalte mit 0, falls noch nicht vorhanden
+            headers.slice(1).forEach(header => {
+              if (!sums[header]) {
+                sums[header] = Array(12).fill(0); // Ein Array für jeden Monat
+              }
+            });
 
-        if (billableHoursIndex === -1) {
-          console.log('Billable hours column not found');
-          return;
-        }
+            // Durchlaufe alle Zeilen ab der vierten Zeile und summiere die Werte in den entsprechenden Spalten ab der zweiten Spalte
+            for (let i = 4; i < data.length; i++) {
+              const row = data[i];
+              console.log('Row:', row);
 
-        // Variable zum Speichern der Summe der Billable hours
-        let totalBillableHours = 0;
-
-        // Durchlaufe alle Zeilen ab der zweiten Zeile und summiere die Billable hours
-        for (let i = 1; i < data.length; i++) {
-          const row = data[i];
-          console.log('Row:', row);
-
-          // Wenn der Wert in der Spalte "Billable hours" leer ist, setze ihn auf 0
-          const billableHours = row[billableHoursIndex] ? parseFloat(row[billableHoursIndex]) : 0;
-          console.log('Billable hours:', billableHours);
-
-          if (!isNaN(billableHours)) {
-            totalBillableHours += billableHours;
+              headers.slice(1).forEach((header, index) => {
+                const value = row[index + 1] ? parseFloat(row[index + 1]) : 0;
+                if (!isNaN(value)) {
+                  sums[header][monthIndex] += value;
+                }
+              });
+            }
           }
-        }
+        });
 
-        console.log('Total Billable Hours:', totalBillableHours);
+        console.log('Sums:', sums);
 
-        // Hier kannst du den Wert von totalBillableHours weiterverarbeiten oder anzeigen
-        const totalBillableHoursElement = document.getElementById('totalBillableHours');
-        if (totalBillableHoursElement) {
-          totalBillableHoursElement.textContent = `${totalBillableHours}`;
+        // Hier kannst du die Summen weiterverarbeiten oder anzeigen
+        const sumsContainer = document.getElementById('sumsContainer');
+        if (sumsContainer) {
+          sumsContainer.innerHTML = ''; // Leere den Container
+
+          // Erstelle eine HTML-Tabelle
+          const table = document.createElement('table');
+          const thead = document.createElement('thead');
+          const tbody = document.createElement('tbody');
+
+          // Tabellenkopf erstellen
+          const headerRow = document.createElement('tr');
+          const emptyHeader = document.createElement('th');
+          headerRow.appendChild(emptyHeader); // Leere Zelle für die erste Spalte
+
+          months.forEach(month => {
+            const th = document.createElement('th');
+            th.textContent = month;
+            headerRow.appendChild(th);
+          });
+
+          thead.appendChild(headerRow);
+
+          // Tabellenkörper erstellen
+          for (const [header, sumsArray] of Object.entries(sums)) {
+            const row = document.createElement('tr');
+            const headerCell = document.createElement('td');
+            headerCell.textContent = header;
+            row.appendChild(headerCell);
+
+            sumsArray.forEach(sum => {
+              const cell = document.createElement('td');
+              cell.textContent = sum;
+              row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+          }
+
+          table.appendChild(thead);
+          table.appendChild(tbody);
+          sumsContainer.appendChild(table);
         } else {
-          console.error('Element with ID "totalBillableHours" not found');
+          console.error('Element with ID "sumsContainer" not found');
         }
-      }
-    };
+      };
 
-    reader.readAsArrayBuffer(file);
-  });
+      reader.readAsArrayBuffer(file);
+    });
 });
