@@ -19,12 +19,14 @@ let Illnes = 0;//Krankenstand
 let travel = 0;//Reisezeit
 let intern = 0;//internes Projekt
 let total = 0;//total in hours
-let getInput; //wert aus eingabefeld
-let basicSalery = 0;//Grundgehalt (id = ge / 12) 
 let saleryPerHour = salery / 174;//Stundensatz
 let bonus = bonusHour * saleryPerHour; //Bonus 
 let salery = basicSalery + bonus;//Gesamtgehalt
 let hourWithouBonus = total - overThreshold//stunden ohne bonus
+
+*/
+let getInput; //wert aus eingabefeld
+let basicSalery = 0;//Grundgehalt (id = ge / 12) 
 
 
 document.getElementById('ge').addEventListener('input', function() {
@@ -32,7 +34,7 @@ document.getElementById('ge').addEventListener('input', function() {
   basicSalery = getInput/12;
     console.log('Monatliches Gehalt:', basicSalery);
 });
-*/
+
 // Funktion, um den Kalender zu generieren
 function generateCalendar(currentDay) {
   const firstDayOfMonth = new Date(year, month, 1);
@@ -176,7 +178,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const worksheet = workbook.Sheets[sheetName];
       console.log('Worksheet:', worksheet);
 
-      const data = XLSX.utils.sheet_to_json(worksheet);
+      const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
       console.log('Data:', data);
 
       if (!data || data.length === 0) {
@@ -184,12 +186,45 @@ document.addEventListener('DOMContentLoaded', (event) => {
       } else {
         console.log('Data length:', data.length);
 
-        // Simplify the data processing
-        const dataArray = data.map((row) => {
+        // Annahme: Die zweite Zeile enthält die Header
+        const headers = data[1];
+        console.log('Headers:', headers);
+
+        // Finde den Index der "Billable hours" Spalte
+        const billableHoursIndex = headers.indexOf('Billable hours');
+        console.log('Billable hours index:', billableHoursIndex);
+
+        if (billableHoursIndex === -1) {
+          console.log('Billable hours column not found');
+          return;
+        }
+
+        // Variable zum Speichern der Summe der Billable hours
+        let totalBillableHours = 0;
+
+        // Durchlaufe alle Zeilen ab der zweiten Zeile und summiere die Billable hours
+        for (let i = 1; i < data.length; i++) {
+          const row = data[i];
           console.log('Row:', row);
-          console.log('Object.values(row):', Object.values(row));
-          return Object.values(row);
-        });
+
+          // Wenn der Wert in der Spalte "Billable hours" leer ist, setze ihn auf 0
+          const billableHours = row[billableHoursIndex] ? parseFloat(row[billableHoursIndex]) : 0;
+          console.log('Billable hours:', billableHours);
+
+          if (!isNaN(billableHours)) {
+            totalBillableHours += billableHours;
+          }
+        }
+
+        console.log('Total Billable Hours:', totalBillableHours);
+
+        // Hier kannst du den Wert von totalBillableHours weiterverarbeiten oder anzeigen
+        const totalBillableHoursElement = document.getElementById('totalBillableHours');
+        if (totalBillableHoursElement) {
+          totalBillableHoursElement.textContent = `${totalBillableHours}`;
+        } else {
+          console.error('Element with ID "totalBillableHours" not found');
+        }
       }
     };
 
