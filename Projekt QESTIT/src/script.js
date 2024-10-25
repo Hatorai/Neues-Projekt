@@ -388,4 +388,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
     addColumn('Gehalt ohne Bonus', basicSalaryWithoutBonus);
     addColumn('gesamtgehalt', SaleryWithBonus);
   }
+  window.exportTableToPDF = function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+  
+    // Überprüfen, ob das Element existiert
+    const tableElement = document.getElementById('sumsContainer');
+  
+    if (tableElement) {
+      // Finde die Tabelle innerhalb des Containers
+      const table = tableElement.querySelector('table');
+  
+      if (table) {
+        // Automatische Anpassung der Spaltenbreite
+        doc.autoTable({
+          html: table,
+          styles: {
+            fontSize: 8,
+            overflow: 'linebreak',
+            cellWidth: 'wrap'
+          },
+          columnStyles: {
+            0: { cellWidth: 'auto' },
+            1: { cellWidth: 'auto' },
+            2: { cellWidth: 'auto' }
+          }
+        });
+  
+        doc.save('tabelle.pdf');
+      } else {
+        console.error('Tabelle im sumsContainer nicht gefunden');
+      }
+    } else {
+      console.error('Element mit der ID "sumsContainer" nicht gefunden');
+    }
+  };
 });
